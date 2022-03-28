@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <title>Encrpyt A Message</title>
+</head>
+
+<body>
+<div class="body4">
+    <div class="container4">
+    <div class="texter"><input type="number" name="enKey" id="enKey" value="" placeholder="Enter your key"  required/>
+      <span id="guide">Choose a number from 1 to 100</span></div>
+    <div class="texter"><textarea type="text" name="crText" id="crText" value="" placeholder="Enter your text" autofocus required /></textarea></div>
+  <input type="button" name="crButton" id="crButton" value="Encrpyt" />
+  <div class="crDemo"></div>
+   <div class="lastPlace">
+    <div>  <input type="button" name="cryptShare" id="cryptShare" value="Share To Whatsapp" /></div> 
+ <div> <input type="button" name="cryptCopy" id="cryptCopy" value="Copy to phone" /></div>
+  
+  </div>
+    <div><button class="home">HOME</button></div>
+  </div>
+</div>
+  <script type="text/javascript" charset="utf-8">
+    let demo = document.querySelector(".crDemo");
+   let crypt = document.getElementById('crText');
+ let cryptKey = document.getElementById('enKey');
+let shared = document.getElementById('cryptShare');
+  let copyTo2 = document.getElementById('cryptCopy');
+ let cryptButton = document.getElementById('crButton');
+ cryptButton.addEventListener('click',function () {
+   if( cryptKey.value == null || cryptKey.value == "") {
+    alert('please input a key')
+  } else {
+   let values = "";
+      let b = "";
+      for (var i = 0; i < crypt.value.length; i++) {
+        b = crypt.value.charCodeAt(i);
+        b = Number(b) +  Number(cryptKey.value)
+  if (b >= 126) {
+    // added one so that the number itself can be counted
+  let hold =  b - 127;
+  hold += 32
+  b = hold
+  }
+  let d = String.fromCharCode(b)
+        values += d;
+      }
+      demo.textContent = values;
+     
+ }
+ })
+ copyTo2.addEventListener('click', function () {
+   let selection = window.getSelection();
+     let range = document.createRange();
+    range.selectNodeContents(demo);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand('copy')
+    selection.removeAllRanges();
+    let original = copyTo2.value;
+    copyTo2.value = "Copied!"
+    setTimeout(() => {
+    copyTo2.value = original;
+    }, 1000)
+    })
+    
+var newURL = window.location.protocol + "//" + window.location.host + "/decrypt.html";
+    shared.addEventListener('click', function () {
+    window.open(`whatsapp://send?text= I have sent you an encrypted message " ${demo.textContent} " and the key is ${cryptKey.value}. Copy and follow this link ${newURL} to decrypt. Do not forget your Key.`,'_blank')
+
+
+    })
+   
+   let guided = document.getElementById("guide");
+    
+   cryptKey.addEventListener("focus", function (){
+      guided.style.display ='block';
+    })
+     cryptKey.addEventListener("blur", function (){
+     guided.style.display ='none';
+     })
+     let home = document.querySelector(".home")
+    home.addEventListener("click", function () {
+      window.open("index.html","_self")
+    })
+  </script>
+</body>
+
+</html>

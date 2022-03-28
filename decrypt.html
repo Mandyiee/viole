@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <title>Decrypt A Message</title>
+</head>
+
+<body>
+  <div class="body5">
+    <div class="container5">
+    <div class="texter"><input type="number" name="Key" id="Key" value="" placeholder="Enter your key"/> </div>
+    <div class="texter"> <textarea type="text" name="decryptText" id="decryptText" value="" placeholder="Enter a text" autofocus/></textarea> </div>
+    <div>  <input type="button" name="decryptButton" id="decryptButton" value="decrypt" /></div>
+    <div id="drDemo">
+  </div>
+  <div class="lastPlace">
+    <div>  <input type="button" name="decryptShare" id="decryptShare" value="Share To Whatsapp" /></div> 
+ <div> <input type="button" name="decryptCopy" id="decryptCopy" value="Copy to phone" /></div>
+  
+  </div>
+  <div><button class="home">HOME</button></div>
+  </div>
+  </div>
+  
+  
+ 
+
+  
+  <script type="text/javascript" charset="utf-8">
+  let decrypt = document.getElementById('decryptButton');
+  let share = document.getElementById('decryptShare');
+  let copyTo = document.getElementById('decryptCopy');
+ let cryptText = document.getElementById("decryptText");
+ let demo2 = document.getElementById('drDemo');
+ let key = document.getElementById('Key');
+    
+decrypt.addEventListener('click', function () {
+  if( key.value == null || key.value == "") {
+    alert('please input a key')
+  } else {
+    let values2 = cryptText.value;
+    let values3 = '';
+    for(let k = 0; k < values2.length; k++){
+      values3 += values2.charCodeAt(k) + ' ';
+      
+    }
+      let devalue = values3.split(' ')
+        .map(y => y = parseInt(y, 10))
+        .map(no => no -= Number(key.value));
+       for(let w = 0; w <= devalue.length; w++){
+     if ( devalue[w] < 32){
+      let hold = 31 - devalue[w];
+      hold = 126 - hold;
+      devalue[w] = hold;
+     }
+     
+       }
+        let devalue2 = devalue.map((num) => String.fromCharCode(num)).join('');
+      demo2.textContent = devalue2;
+        
+    } 
+    })
+    copyTo.addEventListener('click', function () {
+   let selection = window.getSelection();
+     let range = document.createRange();
+    range.selectNodeContents(demo2);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand('copy')
+    selection.removeAllRanges();
+    let original = copyTo.value;
+    copyTo.value = "Copied!"
+    setTimeout(() => {
+    copyTo.value = original;
+    }, 1000)
+    })
+    
+    var newURL = window.location.protocol + "//" + window.location.host + "/encrypt.html";
+    
+    share.addEventListener('click', function () {
+      window.open(`whatsapp://send?text= I have decrypted your message  " ${demo2.textContent} "  and the key was ${Key.value}.Follow this link ${newURL} to send another message.`,'_blank')
+    })
+    let home = document.querySelector(".home")
+    home.addEventListener("click", function () {
+      window.open("index.html","_self")
+    })
+  </script>
+</body>
+
+</html>

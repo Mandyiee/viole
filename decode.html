@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <title>Decode A Text</title>
+</head>
+
+<body>
+  <div class="body2">
+     <div class="container2">
+    <select name="beDecodedIn" id="beDecodedIn">
+      <option value="11">Decimal</option>
+      <option value="22">Binary</option>
+      <option value="33">Octal</option>
+      <option value="44">Hexadecimal</option>
+    </select>
+    <div class="texter"><textarea type="text" name="deText" id="deText" value="" placeholder='Enter an encoded text' /></textarea></div>
+    <div><button class="clear">Clear Text</button></div> 
+    <div id="demo2"></div>
+    <div class="divcopy">
+       <button class="share">Share To Whatsapp</button>
+      <button class="copy" type="button">Copy Decoded Text</button>
+    </div>
+      <div><button class="home">HOME</button></div>
+  </div>
+  </div>
+ 
+  <script type="text/javascript" charset="utf-8">
+    let text2 = document.getElementById("deText");
+    let button2 = document.getElementById("button2");
+    let box2 = document.getElementById("demo2");
+    let selects = document.getElementById("beDecodedIn");
+    let based;
+   let copyButton2 = document.querySelector('.copy')
+    const deChange = () => {
+      let values2 = text2.value;
+      let devalue = values2.split(' ')
+        .map(y => y = parseInt(y, based))
+        
+        .map((num) => String.fromCharCode(num)).join('');
+        if (devalue) {
+          box2.textContent = devalue;
+        }
+          
+        
+      
+    }
+
+    selects.addEventListener('change', function() {
+      let option = selects.options[selects.selectedIndex].value;
+      switch (option) {
+        case '11':
+          based = 10;
+          deText.placeholder =' Enter a decimal encoded text';
+          break;
+        case '22':
+          based = 2;
+          deText.placeholder =' Enter a binary encoded text';
+          break;
+        case '33':
+          based = 8;
+          deText.placeholder =' Enter an octal encoded text';
+          break;
+        case '44':
+          based = 16;
+          deText.placeholder =' Enter a Hexadecimal encoded text';
+          break;
+        default:
+          base = 10;
+       deText.placeholder =' Enter a decimal encoded text';
+      }
+      deChange();
+    })
+text2.addEventListener('input', deChange)
+copyButton2.addEventListener('click', function () {
+  const selection = document.getSelection();
+  const range = document.createRange();
+  range.selectNodeContents(box2);
+
+  selection.addRange(range);
+  document.execCommand('copy');
+  let original = copyButton2.textContent ;
+  copyButton2.textContent = 'Copied!';
+  setTimeout(function () {
+    copyButton2.textContent  = original;
+  }, 1000)
+  
+})
+let home = document.querySelector(".home")
+    home.addEventListener("click", function () {
+      window.open("index.html","_self")
+    })
+ let shareTo = document.querySelector(".share");
+    var newURL = window.location.protocol + "//" + window.location.host + "/encode.html";
+    shareTo.addEventListener("click", () => {
+      window.open(`whatsapp://send?text=I have decoded your message "${box2.textContent}" from ${selects.options[selects.selectedIndex].text} format. Follow this link ${newURL} to send a new message`,"_blank")
+    })
+    let clear = document.querySelector(".clear");
+    clear.addEventListener("click", () => {
+   box2.textContent = " ";
+    text2.value= ""
+    })
+  </script>
+</body>
+
+</html>
