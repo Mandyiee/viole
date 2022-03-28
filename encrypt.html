@@ -68,7 +68,7 @@ let shared = document.getElementById('cryptShare');
     }, 1000)
     })
     
-var newURL = window.location.protocol + "//" + window.location.host + "/decrypt.html";
+var newURL = window.location.protocol + "//" + window.location.host + "/viole/decrypt.html";
     shared.addEventListener('click', function () {
     window.open(`whatsapp://send?text= I have sent you an encrypted message " ${demo.textContent} " and the key is ${cryptKey.value}. Copy and follow this link ${newURL} to decrypt. Do not forget your Key.`,'_blank')
 

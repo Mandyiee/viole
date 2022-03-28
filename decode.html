@@ -94,7 +94,7 @@ let home = document.querySelector(".home")
       window.open("index.html","_self")
     })
  let shareTo = document.querySelector(".share");
-    var newURL = window.location.protocol + "//" + window.location.host + "/encode.html";
+    var newURL = window.location.protocol + "//" + window.location.host + "/viole/encode.html";
     shareTo.addEventListener("click", () => {
       window.open(`whatsapp://send?text=I have decoded your message "${box2.textContent}" from ${selects.options[selects.selectedIndex].text} format. Follow this link ${newURL} to send a new message`,"_blank")
     })
